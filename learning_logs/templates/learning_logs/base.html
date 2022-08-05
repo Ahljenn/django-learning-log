@@ -4,9 +4,16 @@
   <h3><a href="{% url 'learning_logs:topics' %}">Topics</a></h3>
 </header>
 
+<!-- Required placeholder block tags; the child template defines the kind of information that goes inside the content block. -->
 {% block content %}{% endblock content%}
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+  
+  * {
+    font-family: 'Inter', sans-serif;
+  }
+
   header {
     display: flex;
     gap: 10px;

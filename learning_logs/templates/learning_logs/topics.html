@@ -4,11 +4,11 @@
 {% block content %}
   <ul>
     {% for topic in topics %}
-      {% comment %} Render a URL template tag to generate a link to the topic. {% endcomment %}
+       <!--  Render a URL template tag to generate a link to the topic. -->
       <li>
         <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
       </li>
-      {% comment %} Render something else if there are no items in the list. {% endcomment %}
+      <!-- Render something else if there are no items in the list. -->
     {% empty %} 
       <li>No topics added yet!</li>
     {% endfor %}
