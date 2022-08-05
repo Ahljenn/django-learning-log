@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Topic
-from .forms import TopicForm
+from .forms import TopicForm, EntryForm
 
 # Create your views here.
 def index(request):
@@ -42,3 +42,24 @@ def new_topic(request):
     #Display a blank or invalid form.
   context = {'form': form}
   return render(request, 'learning_logs/new_topic.html', context)
+
+
+def new_entry(request, topic_id):
+  """Returns the new entry page for a topic."""
+  topic = Topic.objects.get(id=topic_id)
+
+  if request.method != 'POST':
+    # No data is being submitted - create blank form.
+    form = EntryForm()
+  else:
+    # Data is being submitted - process data.
+    form = EntryForm(data=request.POST) # Create an instance of TopicForm and pass the user data.
+    if form.is_valid():
+      new_entry = form.save(commit=False) # Create a new try object and assign it to new_entry without saving to database.
+      new_entry.topic = topic
+      new_entry.save()
+      return redirect('learning_logs:topic', topic_id=topic_id)
+    
+  # Display a blank or invalid form.
+  context = {'topic': topic, 'form': form}
+  return render(request, 'learning_logs/new_entry.html', context)
