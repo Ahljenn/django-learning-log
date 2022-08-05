@@ -1,7 +1,14 @@
 <!-- A base template containing repeated elements that each page can inherit from. -->
-<p>
-  <a href="{% url 'learning_logs:index' %}">Learning Log</a>
-  <a href="{% url 'learning_logs:topics' %}">Topics</a>
-</p>
+<header>
+  <h3><a href="{% url 'learning_logs:index' %}">Learning Log</a></h3>
+  <h3><a href="{% url 'learning_logs:topics' %}">Topics</a></h3>
+</header>
 
 {% block content %}{% endblock content%}
+
+<style>
+  header {
+    display: flex;
+    gap: 10px;
+  }
+</style>

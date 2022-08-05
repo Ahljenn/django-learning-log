@@ -1,0 +1,25 @@
+<!-- Inherits from base.html  -->
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+
+  <h2>Topic: {{ topic }}</h2>
+
+  <p>Entries:</p>
+  <ul>
+    {% for entry in entries%}
+      <li>
+        <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
+        <p>{{ entry.text|linebreaks }}</p>
+      </li>
+    {% empty %}
+      <li>There are no entries for this topic yet!</li>
+    {% endfor %}
+  </ul>
+
+{% endblock content %}
+
+{% comment %} 
+  In django, (|) represents a template fulter - modifies the value in a template.
+  The filter linebreaks ensures that long text entries include line breaks in a format understood by the browser.
+{% endcomment %}
