@@ -1,0 +1,12 @@
+<!-- Inherits from base.html  -->
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+  <ul>
+    {% for topic in topics %}
+      <li>{{ topic }}</li>
+    {% empty %} {% comment %} Render something else if there are no items in the list {% endcomment %}
+      <li>No topics added yet!</li>
+    {% endfor %}
+  </ul>
+{% endblock content %}
