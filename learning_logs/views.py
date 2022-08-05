@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Topic
+from .forms import TopicForm
 
 # Create your views here.
 def index(request):
@@ -24,3 +25,20 @@ def topic(request, topic_id):
     'entries': entries
   }
   return render(request, 'learning_logs/topic.html', context)
+
+def new_topic(request):
+  """Renders the new topic page."""
+  if request.method != 'POST':
+    # No data is being submitted - create blank form.
+    form = TopicForm()
+  else:
+    # Data is being submitted - process data.
+    form = TopicForm(data=request.POST) # Create an instance of TopicForm and pass the user data.
+    if form.is_valid():
+      form.save() # Writes data from the form to database if form is valid.
+      return redirect('learning_logs:topics') # Redirect user back to topics page after submitting form.
+    
+    
+    #Display a blank or invalid form.
+    context = {'form': form}
+    return render(request, 'learning_logs/new_topic.html', context)
