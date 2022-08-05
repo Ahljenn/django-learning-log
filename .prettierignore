@@ -1,0 +1,2 @@
+#Ignore Django HTML files to format
+*.html
