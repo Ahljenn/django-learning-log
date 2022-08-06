@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 
@@ -23,6 +24,11 @@ def topics(request):
 def topic(request, topic_id):
   """Renders the single topic page and all its entries associated."""
   topic = Topic.objects.get(id=topic_id)
+
+  # Make sure topic belongs to the user
+  if topic.owner != request.user:
+    raise Http404
+
   entries = topic.entry_set.order_by('-date_added') # Minus sign sorts in reverse order.
   context = {
     'topic': topic,
@@ -40,7 +46,9 @@ def new_topic(request):
     # Data is being submitted - process data.
     form = TopicForm(data=request.POST) # Create an instance of TopicForm and pass the user data.
     if form.is_valid():
-      form.save() # Writes data from the form to database if form is valid.
+      new_topic = form.save(commit=False)
+      new_topic.owner = request.user #Associate new topic to correct user
+      new_topic.save()
       return redirect('learning_logs:topics') # Redirect user back to topics page after submitting form.
     
     
@@ -77,6 +85,9 @@ def edit_entry(request, entry_id):
   """Renders the page to edit an existing entry."""
   entry = Entry.objects.get(id=entry_id)
   topic = entry.topic
+
+  if topic.owner != request.user:
+    raise Http404
 
   if request.method != 'POST':
     # Initial request; pre-fill form with current entry. For a GET request.
