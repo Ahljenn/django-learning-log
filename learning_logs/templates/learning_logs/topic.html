@@ -13,6 +13,10 @@
       <li>
         <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
         <p>{{ entry.text|linebreaks }}</p>
+        <p>
+          <a href="{% url 'learning_logs:edit_entry' entry.id %}">Edit entry</a>
+        </p>
+
       </li>
     {% empty %}
       <li>There are no entries for this topic yet!</li>
@@ -24,4 +28,7 @@
 <!--
   In django, (|) represents a template fulter - modifies the value in a template.
   The filter linebreaks ensures that long text entries include line breaks in a format understood by the browser.
+
+  learning_logs:new_entry routes to /new_entry/id
+  learning_logs:edit_entry routes to /edit_entry/id
 -->
