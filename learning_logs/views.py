@@ -11,7 +11,9 @@ def index(request):
 @login_required # Decorator that checks if a user is logged in
 def topics(request):
   """Renders all topics in the learning log."""
-  topics = Topic.objects.order_by('date_added')
+
+  # Restrict access to specific users
+  topics = Topic.objects.filter(owner=request.user).order_by('date_added')
   
   # Define a context to send to the template.
   # A context is a dictionary which the keys are names we'll use in the template to access the data.
