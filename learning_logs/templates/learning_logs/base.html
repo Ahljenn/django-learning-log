@@ -2,6 +2,16 @@
 <nav>
   <h3><a href="{% url 'learning_logs:index' %}">Learning Log</a></h3>
   <h3><a href="{% url 'learning_logs:topics' %}">Topics</a></h3>
+
+
+<!-- Check if user is logged in first. -->
+  {% if user.is_authenticated %}
+    <h3><a href="{% url 'users:logout' %}">Logout</a></h3>
+    <h3>Hello, {{ user.username }}!</h3>
+  {% else %}
+    <h3><a href="{% url 'users:login' %}">Login</a></h3>
+  {% endif %}
+
 </nav>
 
 <!-- Required placeholder block tags; the child template defines the kind of information that goes inside the content block. -->
@@ -17,5 +27,6 @@
   nav {
     display: flex;
     gap: 15px;
+    justify-content: flex-end;
   }
 </style>

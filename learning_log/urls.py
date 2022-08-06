@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('learning_logs.urls')), #Home page
+    path('admin/', admin.site.urls), # Built-in admin page
+    path('', include('learning_logs.urls')), # Home page
+    path('users/', include('users.urls')), # Users page
 ]
