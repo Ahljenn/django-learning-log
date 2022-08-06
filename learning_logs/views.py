@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 
@@ -7,6 +8,7 @@ def index(request):
   """Home page for Learning Log app."""
   return render(request, 'learning_logs/index.html')
 
+@login_required # Decorator that checks if a user is logged in
 def topics(request):
   """Renders all topics in the learning log."""
   topics = Topic.objects.order_by('date_added')
@@ -26,6 +28,7 @@ def topic(request, topic_id):
   }
   return render(request, 'learning_logs/topic.html', context)
 
+@login_required
 def new_topic(request):
   """Renders the new topic page."""
   if request.method != 'POST':
@@ -43,7 +46,7 @@ def new_topic(request):
   context = {'form': form}
   return render(request, 'learning_logs/new_topic.html', context)
 
-
+@login_required
 def new_entry(request, topic_id):
   """Renders the new entry page for a topic."""
   topic = Topic.objects.get(id=topic_id)
@@ -67,6 +70,7 @@ def new_entry(request, topic_id):
   }
   return render(request, 'learning_logs/new_entry.html', context)
 
+@login_required
 def edit_entry(request, entry_id):
   """Renders the page to edit an existing entry."""
   entry = Entry.objects.get(id=entry_id)
