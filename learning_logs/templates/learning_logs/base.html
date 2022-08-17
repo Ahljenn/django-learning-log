@@ -1,24 +1,49 @@
+{% load django_bootstrap5 %}
 <!-- A base template containing repeated elements that each page can inherit from. -->
-<nav>
-  <h3><a href="{% url 'learning_logs:index' %}">Learning Log</a></h3>
-  <h3><a href="{% url 'learning_logs:topics' %}">Topics</a></h3>
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+  <title>Learning Log</title>
+
+  {% bootstrap_css %}
+</head>
+<body>
 
 
-<!-- Check if user is logged in first. -->
-  {% if user.is_authenticated %}
-    <h3><a href="{% url 'users:logout' %}">Logout</a></h3>
-    <h3>Hello, {{ user.username }}!</h3>
-  {% else %}
-    <h3><a href="{% url 'users:login' %}">Login</a></h3>
-    <h3><a href="{% url 'users:register' %}">Register</a></h3>
-  {% endif %}
+  <nav class="navbar navbar-default navbar-fixed-top">
+  <h3><a class="text-muted" href="{% url 'learning_logs:index' %}">Learning Log</a></h3>
 
-</nav>
+  <!-- Check if user is logged in first. -->
+    {% if user.is_authenticated %}
+      <h3><a href="{% url 'learning_logs:topics' %}">Topics</a></h3>
+      <h3><a href="{% url 'users:logout' %}">Logout</a></h3>
+      <h3>Hello, {{ user.username }}!</h3>
+    {% else %}
+      <h3><a href="{% url 'users:login' %}">Login</a></h3>
+      <h3><a href="{% url 'users:register' %}">Register</a></h3>
+    {% endif %}
+  </nav>
+
+
+  <main role="main" class="container">
+    <div class="pb-2 mb-2 border-bottom">
+      {%block page_header %}{% endblock page_header %}
+    </div>
+    <div>
+      {% block content %}{% endblock content%} 
+    </div>
+  </main>
+
+</body>
+</html>
 
 <!-- Required placeholder block tags; the child template defines the kind of information that goes inside the content block. -->
-{% block content %}{% endblock content%}
+{% comment %} {% block content %}{% endblock content%} {% endcomment %}
 
-<style>
+{% comment %} <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
   
   * {
@@ -30,4 +55,4 @@
     gap: 15px;
     justify-content: flex-end;
   }
-</style>
+</style> {% endcomment %}

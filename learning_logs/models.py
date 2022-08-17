@@ -17,7 +17,7 @@ class Entry(models.Model):
   """Something specific learned about the topic."""
   topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
   # ForeignKey is a reference to another record in the database
-  # Connects each entry to a specifci topic - each having a key or ID when created
+  # Connects each entry to a specific topic - each having a key or ID when created
   # When a topic is deleted, all entries associated will be deleted too (cascading)
 
   text = models.TextField()
