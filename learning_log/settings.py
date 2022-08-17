@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",
 
     # My apps
+    "learning_forum",
     "learning_logs",
     "users",
 ]
